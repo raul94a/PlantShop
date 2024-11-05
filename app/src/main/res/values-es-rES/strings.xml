@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Plantería</string>
+    <string name="plant_tree">Planta un árbol por la vida</string>
+    <string name="worldwide_delivery">Envío a todo el mundo en 10–15 días</string>
+    <string name="go">Ir</string>
+    <string name="fav_plants">Encuentra tus plantas favoritas</string>
+    <string name="discount">Descuento</string>
+    <string name="all">Todo</string>
+    <string name="indoor">Interior</string>
+    <string name="outdoor">Exterior</string>
+    <string name="popular">Popular</string>
+    <string name="add_cart">Añadir al carrito</string>
+    <string name="details">Detalles</string>
+    <string name="reviews">Valoraciones</string>
+    <string name="size">Tamaño</string>
+    <string name="plant">Planta</string>
+    <string name="height">Altura</string>
+    <string name="humidity">Humedad</string>
+    <string name="price">Precio</string>
+</resources>

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Plant Shop</string>
+    <string name="plant_tree">Plant a tree for life</string>
+    <string name="worldwide_delivery">Worldwide delivery withing 10-15 days</string>
+    <string name="go">Go</string>
+    <string name="fav_plants">Find your favorite plants</string>
+    <string name="discount">Off</string>
+    <string name="all">All</string>
+    <string name="indoor">Indoor</string>
+    <string name="outdoor">Outdoor</string>
+    <string name="popular">Popular</string>
+    <string name="add_cart">Add to cart</string>
+    <string name="details">Detalles</string>
+    <string name="reviews">Valoraciones</string>
+    <string name="size">Size</string>
+    <string name="plant">Plant</string>
+    <string name="height">Height</string>
+    <string name="humidity">Humidity</string>
+    <string name="price">Precio</string>
+
+
+
+
+
+</resources>
