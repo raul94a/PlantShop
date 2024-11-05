@@ -4,6 +4,7 @@ import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raul.plantshop.domain.plants.Plant
+import com.raul.plantshop.domain.plants.PlantCategory
 import com.raul.plantshop.domain.plants.PlantRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,11 +18,23 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+data class HomeState(
+    val plants: List<Plant> = emptyList(),
+    val selectedCategory: PlantCategory = PlantCategory.All
+) {
+    fun getByCategory(): List<Plant>{
+        if(selectedCategory == PlantCategory.All || selectedCategory == PlantCategory.Popular){
+            return plants
+        }
+        return plants.filter { it.category == selectedCategory }
+    }
+}
+
 class HomeViewModel(private val plantRepository: PlantRepository) : ViewModel() {
 
-    var _plants = MutableStateFlow<List<Plant>>(emptyList())
+    private var _homeState = MutableStateFlow(HomeState())
 
-    val plantsFlow = _plants.shareIn(
+    val homeStateFlow = _homeState.shareIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         replay = 1
@@ -32,11 +45,19 @@ class HomeViewModel(private val plantRepository: PlantRepository) : ViewModel() 
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 val plants = plantRepository.loadPlantsResources(resources)
-
-                _plants.update { plants }
+                _homeState.update {
+                    it.copy(
+                        plants = plants.shuffled()
+                    )
+                }
             }
         }
     }
+
+    fun updateCategory(category: PlantCategory) {
+        _homeState.update { it.copy(selectedCategory = category) }
+    }
+
 
 
 

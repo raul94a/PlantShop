@@ -40,13 +40,15 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
                 )
             )
             CategoryTabs {
-                println(it.toString())
+                viewModel.updateCategory(it)
             }
 
-            val plants =
-                viewModel.plantsFlow.collectAsState(initial = emptyList()).value
+            val uiState =
+                viewModel.homeStateFlow.collectAsState(HomeState()).value
 
-            PlantList(plants = plants, modifier = Modifier.padding(start = 10.dp))
+
+
+            PlantList(plants = uiState.getByCategory(), modifier = Modifier.padding(start = 10.dp))
             Spacer(modifier = Modifier.padding(top = 10.dp))
 
         }

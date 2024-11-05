@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.raul.plantshop.R
 import com.raul.plantshop.domain.plants.PlantCategory
+import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.mainText
 
 
@@ -30,9 +31,11 @@ fun CategoryTabs(modifier: Modifier = Modifier, onSelectCategory: (PlantCategory
     val scrollState = rememberScrollState()
 
     Row(
-        modifier = Modifier.horizontalScroll(
-            scrollState
-        ).padding(horizontal = 15.dp)
+        modifier = Modifier
+            .horizontalScroll(
+                scrollState
+            )
+            .padding(horizontal = 15.dp)
     ) {
         ElevatedButton(
             modifier = Modifier.padding(end = 10.dp),
@@ -44,6 +47,7 @@ fun CategoryTabs(modifier: Modifier = Modifier, onSelectCategory: (PlantCategory
             }) {
             Text(
                 stringResource(R.string.all),
+                style = Typography.bodyMedium,
                 color = if (selected.value == PlantCategory.All) Color.White else mainText
             )
         }
@@ -58,6 +62,7 @@ fun CategoryTabs(modifier: Modifier = Modifier, onSelectCategory: (PlantCategory
             }) {
             Text(
                 stringResource(R.string.indoor),
+                style = Typography.bodyMedium,
                 color = if (selected.value == PlantCategory.Indoor) Color.White else mainText
 
             )
@@ -72,6 +77,8 @@ fun CategoryTabs(modifier: Modifier = Modifier, onSelectCategory: (PlantCategory
             }) {
             Text(
                 stringResource(R.string.outdoor),
+                style = Typography.bodyMedium,
+
                 color = if (selected.value == PlantCategory.Outdoor) Color.White else mainText
             )
         }
@@ -87,6 +94,8 @@ fun CategoryTabs(modifier: Modifier = Modifier, onSelectCategory: (PlantCategory
             }) {
             Text(
                 stringResource(R.string.popular),
+                style = Typography.bodyMedium,
+
                 color = if (selected.value == PlantCategory.Popular) Color.White else mainText
             )
         }

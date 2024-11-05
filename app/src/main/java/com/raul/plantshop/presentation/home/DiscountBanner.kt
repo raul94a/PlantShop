@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raul.plantshop.R
+import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.bannerGreen
 import com.raul.plantshop.ui.theme.mainText
 import com.raul.plantshop.ui.theme.subtitle
@@ -61,23 +63,17 @@ fun DiscountBanner(discount: Discount) {
             ) {
                 Text(
                     text = "${discount.percetageDiscount}% " + stringResource(R.string.discount),
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        color = mainText,
-                        fontSize = 18.sp
-                    ),
+                    style = Typography.titleLarge.copy(fontSize = 26.sp),
                     modifier = Modifier.padding(bottom = 10.dp),
 
 
                     )
                 Text(
                     discount.rangeDates, modifier = Modifier,
-                    style = TextStyle(
-
-                        color = subtitle,
-                        fontSize = 14.sp
-
-                    ),
+                    style = Typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = subtitle
+                    )
                 )
 
             }

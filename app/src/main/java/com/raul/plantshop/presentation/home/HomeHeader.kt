@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raul.plantshop.R
+import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.mainText
 import com.raul.plantshop.ui.theme.subtitle
 
@@ -40,13 +42,10 @@ fun HomeHeader(modifier: Modifier? = null, onClickFavorites: () -> Unit) {
         Text(
             stringResource(R.string.fav_plants),
 
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                color = mainText,
-                fontSize = 24.sp
-            ),
+            style = Typography.titleLarge,
             minLines = 2,
-            modifier = Modifier.fillMaxWidth(0.45f)
+            maxLines = 2,
+            modifier = Modifier.fillMaxWidth(0.5f)
 
         )
 

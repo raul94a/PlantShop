@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raul.plantshop.R
 import com.raul.plantshop.domain.plants.Plant
+import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.cardContentColor
 import com.raul.plantshop.ui.theme.mainText
 
@@ -62,10 +63,11 @@ fun PlantList(modifier: Modifier = Modifier, plants: List<Plant>) {
 @Composable
 fun PlantItem(modifier: Modifier = Modifier, plant: Plant) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .height(380.dp)
             .width(280.dp)
+            .padding(top = 10.dp)
             .background(
                 color = cardContentColor,
                 shape = RoundedCornerShape(12.dp)
@@ -77,9 +79,7 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant) {
             painter = painterResource(plant.getDrawable()),
             modifier = Modifier
                 .fillMaxSize(.9f)
-
                 .align(Alignment.CenterEnd),
-
             contentScale = ContentScale.Fit,
             contentDescription = ""
         )
@@ -87,14 +87,10 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant) {
 
         Text(
             "$" + plant.price,
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                color = mainText,
-                fontSize = 20.sp
-            ),
+            style = Typography.titleMedium,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(10.dp)
+                .padding(10.dp).padding(end = 5.dp)
         )
         Row(
 
@@ -113,13 +109,10 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant) {
                 }) {
                 Text(
                     stringResource(R.string.add_cart),
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        color = mainText,
-                        fontSize = 16.sp
-                    ),
-                )
+                    color = mainText,
+                    style = Typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+
+                    )
             }
             IconButton(
                 modifier = Modifier
@@ -144,16 +137,11 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant) {
         Text(
             plant.name,
             Modifier
+                .align(Alignment.TopStart)
+                .padding(top = 35.dp, start = 10.dp),
 
+            style = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 25.sp),
 
-                .align(Alignment.TopCenter)
-                .padding(top = 40.dp),
-
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                color = mainText,
-                fontSize = 24.sp
-            ),
-        )
+            )
     }
 }
