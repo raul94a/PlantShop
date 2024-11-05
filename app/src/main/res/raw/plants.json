@@ -57,7 +57,7 @@
   },
   {
     "id": "4",
-    "name": "S.Trifasciata)",
+    "name": "S.Trifasciata",
     "description": "Una planta muy resistente y fácil de cuidar, perfecta para principiantes. Sus hojas verticales son decorativas y purifican el aire.",
     "imageUri": "R.drawable.plant12",
     "size": 0.5,
@@ -113,7 +113,7 @@
   },
   {
     "id": "8",
-    "name": "Spathiphyllum)",
+    "name": "Spathiphyllum",
     "description": "Conocida como la \"flor de la paz\", el spathiphyllum es una planta elegante y purificadora del aire. Sus flores blancas son muy llamativas.",
     "imageUri": "R.drawable.plant10",
     "size": 0.8,

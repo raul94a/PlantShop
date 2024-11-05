@@ -23,10 +23,23 @@ data class HomeState(
     val selectedCategory: PlantCategory = PlantCategory.All
 ) {
     fun getByCategory(): List<Plant>{
-        if(selectedCategory == PlantCategory.All || selectedCategory == PlantCategory.Popular){
-            return plants
+
+        return when(selectedCategory){
+            PlantCategory.All -> plants
+            PlantCategory.Indoor -> plants.filter { it.category == selectedCategory }
+            PlantCategory.Outdoor -> plants.filter { it.category == selectedCategory }
+            PlantCategory.Popular -> calculatePopulars()
         }
-        return plants.filter { it.category == selectedCategory }
+
+
+
+    }
+
+    private fun calculatePopulars() : List<Plant>{
+        val sortedPlants = plants.sortedByDescending { it.rating?.reviews?.size }
+        val length = plants.size
+        val endIndex = if(length >= 5) 5 else length
+        return sortedPlants.subList(0,endIndex)
     }
 }
 
