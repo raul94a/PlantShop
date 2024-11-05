@@ -13,10 +13,11 @@ val Pink40 = Color(0xFF7D5260)
 
 val bannerGreen = Color(0xffD8EACC)
 val mainText = Color(0xff2C3227)
-val subtitle = Color(0xffA4AE99)
+val
+        subtitle = Color(0xffA4AE99)
 
 val mainBlack = Color(0xff020202)
 
 val buttonColor = Color(0xff4EAC96)
 
-val cardContentColor = Color(0xffE9E9E9)
+val cardContentColor = Color(0xE1F3F0F0)

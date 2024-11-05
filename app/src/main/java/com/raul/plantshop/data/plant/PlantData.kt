@@ -3,6 +3,7 @@ package com.raul.plantshop.data.plant
 import com.raul.plantshop.domain.plants.Plant
 import com.raul.plantshop.domain.plants.PlantCategory
 import com.raul.plantshop.domain.review.Rating
+import com.raul.plantshop.domain.review.Review
 
 data class PlantData(
     val id: String,
@@ -12,12 +13,17 @@ data class PlantData(
     val size: Double,
     val humidity: Int,
     val price: Double,
-    val category: PlantCategory,
-    val rating: Rating? = null
+    val category: String,
+    val rating: List<Review>? = emptyList()
 )
 
 
 fun PlantData.toPlant(): Plant {
+    val category = if (this.category == "Indoor") {
+        PlantCategory.Indoor
+    } else {
+        PlantCategory.Outdoor
+    }
     return Plant(
         id = this.id,
         name = this.name,
@@ -26,7 +32,7 @@ fun PlantData.toPlant(): Plant {
         size = this.size,
         humidity = this.humidity,
         price = this.price,
-        category = this.category,
-        rating = this.rating
+        category = category,
+        rating = Rating(this.rating?.toMutableList() ?: mutableListOf())
     )
 }

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "1",
+    "name": "M. Deliciosa",
+    "description": "Conocida por sus hojas perforadas, la Monstera Deliciosa es una planta tropical que aporta un toque exótico a cualquier espacio. Sus raíces aéreas le dan un aspecto único y salvaje. Ideal para interiores luminosos y húmedos.",
+    "imageUri": "R.drawable.plant1",
+    "size": 1.5,
+    "humidity": 60,
+    "price": 39.99,
+    "category": "Indoor",
+    "rating": [
+      {
+        "user": "PlantLover123",
+        "comment": "¡Mi Monstera es la estrella de mi salón! Sus hojas son enormes y espectaculares.",
+        "rating": 5.0
+      },
+      {
+        "user": "GreenThumb456",
+        "comment": "Crece rápido y es muy fácil de cuidar, ¡la recomiendo!",
+        "rating": 4.5
+      },
+      {
+        "user": "NewPlantParent",
+        "comment": "La compré hace poco y ya está sacando una nueva hoja. Estoy encantada.",
+        "rating": 4.0
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "F.L. Bambino",
+    "description": "Una versión más compacta del Ficus Lyrata tradicional, el Bambino es ideal para espacios pequeños. Sus hojas en forma de violín son de un verde intenso y brillante. Necesita mucha luz indirecta.",
+    "imageUri": "R.drawable.plant2",
+    "size": 1.0,
+    "humidity": 50,
+    "price": 34.99,
+    "category": "Indoor",
+    "rating": [
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Lavanda",
+    "description": "La lavanda es una planta aromática y medicinal muy apreciada por sus hermosas flores y su relajante fragancia. Ideal para jardines y balcones soleados.",
+    "imageUri": "R.drawable.plant8",
+    "size": 0.8,
+    "humidity": 40,
+    "price": 22.99,
+    "category": "Outdoor",
+    "rating": [
+      {
+        "user": "GardenLover",
+        "comment": "El aroma de mi lavanda es increíble. Atrae a muchas abejas y mariposas.",
+        "rating": 4.9
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "S.Trifasciata)",
+    "description": "Una planta muy resistente y fácil de cuidar, perfecta para principiantes. Sus hojas verticales son decorativas y purifican el aire.",
+    "imageUri": "R.drawable.plant12",
+    "size": 0.5,
+    "humidity": 30,
+    "price": 19.99,
+    "category": "Indoor",
+    "rating": [
+      {
+        "user": "LowMaintenance",
+        "comment": "La tengo en mi dormitorio y apenas la riego. ¡Increíble lo poco que necesita!",
+        "rating": 4.2
+      },
+      {
+        "user": "PlantAddict",
+        "comment": "Colecciono Sansevierias de diferentes variedades. Son muy versátiles.",
+        "rating": 4.5
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Z. Zamifolia",
+    "description": "Una planta casi indestructible, perfecta para lugares con poca luz. Sus hojas brillantes y carnosas la hacen muy atractiva.",
+    "imageUri": "R.drawable.plant4",
+    "size": 0.6,
+    "humidity": 30,
+    "price": 25.99,
+    "category": "Indoor",
+    "rating": [
+      {
+        "user": "LowLightPlantLover",
+        "comment": "Mi planta ZZ sobrevive a todo, ¡incluso a mi olvido!",
+        "rating": 4.7
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "name": "Cactus",
+    "description": "Famoso por sus flores de colores vibrantes en invierno, el cactus de Navidad es una planta fácil de cuidar y muy decorativa.",
+    "imageUri": "R.drawable.plant9",
+    "size": 0.4,
+    "humidity": 40,
+    "price": 18.99,
+    "category": "Outdoor",
+    "rating": [
+      {
+        "user": "HolidayPlantFan",
+        "comment": "Mi cactus florece todos los años y llena mi casa de alegría.",
+        "rating": 4.8
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "name": "Spathiphyllum)",
+    "description": "Conocida como la \"flor de la paz\", el spathiphyllum es una planta elegante y purificadora del aire. Sus flores blancas son muy llamativas.",
+    "imageUri": "R.drawable.plant10",
+    "size": 0.8,
+    "humidity": 60,
+    "price": 32.99,
+    "category": "Indoor",
+    "rating": [
+      {
+        "user": "AirPurifier",
+        "comment": "Tengo varios spathiphyllums en casa. ¡Mejoran la calidad del aire!",
+        "rating": 4.6
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "name": "Tomate",
+    "description": "Cultivar tus propios tomates cherry es muy gratificante. Son deliciosos y fáciles de cuidar en macetas o en el jardín.",
+    "imageUri": "R.drawable.plant11",
+    "size": 0.3,
+    "humidity": 50,
+    "price": 12.99,
+    "category": "Outdoor",
+    "rating": [
+      {
+        "user": "HomeGardener",
+        "comment": "Mis tomates cherry son los más dulces que he probado.",
+        "rating": 4.9
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "name": "Yucca",
+    "description": "Una planta resistente y de crecimiento lento, ideal para decorar rincones con poca luz. Su tronco grueso y sus hojas largas le dan un aspecto exótico.",
+    "imageUri": "R.drawable.plant13",
+    "size": 1.5,
+    "humidity": 40,
+    "price": 49.99,
+    "category": "Indoor",
+    "rating": [
+      {
+        "user": "DesertPlantLover",
+        "comment": "Mi yucca es mi planta favorita. ¡Es tan fácil de cuidar!",
+        "rating": 4.5
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "name": "Romero",
+    "description": "El romero es una planta aromática muy utilizada en la cocina y la medicina natural. Sus flores atraen a las abejas y otros insectos beneficiosos.",
+    "imageUri": "R.drawable.plant14",
+    "size": 0.6,
+    "humidity": 40,
+    "price": 15.99,
+    "category": "Outdoor",
+    "rating": [
+      {
+        "user": "HerbGardener",
+        "comment": "Utilizo el romero fresco en todas mis recetas. ¡Tiene un sabor increíble!",
+        "rating": 4.8
+      }
+    ]
+  }
+]
