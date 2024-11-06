@@ -65,7 +65,7 @@ fun NavGraphBuilder.addPlantDetails(navController: NavController) {
 
         val gson = Gson()
         val plant = gson.fromJson(data, PlantData::class.java)
-        PlantDetailsScreen(plant = plant.toPlant())
+        PlantDetailsScreen(plant = plant.toPlant(), navController = navController)
     }
 }
 

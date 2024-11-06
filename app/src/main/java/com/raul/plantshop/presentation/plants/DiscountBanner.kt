@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.raul.plantshop.R
 import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.bannerGreen
+import com.raul.plantshop.ui.theme.headerGrey
 import com.raul.plantshop.ui.theme.subtitle
 
 
@@ -71,7 +72,7 @@ fun DiscountBanner(discount: Discount) {
                     discount.rangeDates, modifier = Modifier,
                     style = Typography.bodyMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = subtitle
+                        color = headerGrey
                     )
                 )
 

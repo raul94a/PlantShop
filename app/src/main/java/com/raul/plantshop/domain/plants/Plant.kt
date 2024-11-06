@@ -10,6 +10,7 @@ import kotlinx.serialization.Serializable
 data class Plant(
     val id: String,
     val name: String,
+    val isFav : Boolean = false,
     val description: String,
     val imageUri: String,
     val size: Double,

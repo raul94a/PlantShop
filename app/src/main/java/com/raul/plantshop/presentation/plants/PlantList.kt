@@ -147,7 +147,7 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant, onTapCard: (String) -
                 .align(Alignment.TopStart)
                 .padding(top = 35.dp, start = 10.dp),
 
-            style = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 25.sp),
+            style = Typography.bodyMedium.copy(fontWeight = FontWeight.W600, fontSize = 21.sp),
 
             )
     }
