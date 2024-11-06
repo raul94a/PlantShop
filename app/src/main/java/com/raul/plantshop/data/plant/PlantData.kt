@@ -5,6 +5,8 @@ import com.raul.plantshop.domain.plants.PlantCategory
 import com.raul.plantshop.domain.review.Rating
 import com.raul.plantshop.domain.review.Review
 
+
+
 data class PlantData(
     val id: String,
     val name: String,

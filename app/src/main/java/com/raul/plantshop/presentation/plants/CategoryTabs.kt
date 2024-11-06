@@ -1,4 +1,4 @@
-package com.raul.plantshop.presentation.home
+package com.raul.plantshop.presentation.plants
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row

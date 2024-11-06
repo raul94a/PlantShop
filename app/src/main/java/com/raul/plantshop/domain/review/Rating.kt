@@ -1,5 +1,8 @@
 package com.raul.plantshop.domain.review
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class Rating(val reviews: MutableList<Review>) {
 
 

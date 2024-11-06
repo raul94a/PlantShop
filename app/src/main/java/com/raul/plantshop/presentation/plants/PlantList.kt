@@ -1,11 +1,11 @@
-package com.raul.plantshop.presentation.home
+package com.raul.plantshop.presentation.plants
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,19 +28,19 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.gson.Gson
 import com.raul.plantshop.R
 import com.raul.plantshop.domain.plants.Plant
+import com.raul.plantshop.domain.plants.toPlantData
 import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.cardContentColor
 import com.raul.plantshop.ui.theme.mainText
 
 @Composable
-fun PlantList(modifier: Modifier = Modifier, plants: List<Plant>) {
+fun PlantList(modifier: Modifier = Modifier, plants: List<Plant>, onTapCard: (String) -> Unit) {
     LazyRow(
         modifier = modifier
             .fillMaxSize(1f)
@@ -53,7 +53,9 @@ fun PlantList(modifier: Modifier = Modifier, plants: List<Plant>) {
         items(plants.size) { i ->
             val plant = plants[i]
             key(plant.id) {
-                PlantItem(plant = plant)
+                PlantItem(plant = plant){
+                    onTapCard(it)
+                }
             }
 
         }
@@ -61,10 +63,15 @@ fun PlantList(modifier: Modifier = Modifier, plants: List<Plant>) {
 }
 
 @Composable
-fun PlantItem(modifier: Modifier = Modifier, plant: Plant) {
+fun PlantItem(modifier: Modifier = Modifier, plant: Plant, onTapCard: (String) -> Unit) {
     Box(
         modifier = modifier
             .fillMaxSize()
+            .clickable {
+                val gson = Gson()
+                val plantJson = gson.toJson(plant.toPlantData())
+                onTapCard(plantJson)
+            }
             .height(380.dp)
             .width(280.dp)
             .padding(top = 10.dp)

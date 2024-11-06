@@ -1,4 +1,4 @@
-package com.raul.plantshop.presentation.home
+package com.raul.plantshop.presentation.plants
 
 import android.content.res.Resources
 import androidx.lifecycle.ViewModel
@@ -7,12 +7,8 @@ import com.raul.plantshop.domain.plants.Plant
 import com.raul.plantshop.domain.plants.PlantCategory
 import com.raul.plantshop.domain.plants.PlantRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

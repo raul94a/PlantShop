@@ -1,4 +1,4 @@
-package com.raul.plantshop.presentation.home
+package com.raul.plantshop.presentation.plants
 
 
 import androidx.compose.foundation.Image
@@ -21,14 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raul.plantshop.R
 import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.bannerGreen
-import com.raul.plantshop.ui.theme.mainText
 import com.raul.plantshop.ui.theme.subtitle
 
 
@@ -44,7 +42,8 @@ fun DiscountBanner(discount: Discount) {
         modifier = Modifier
             .fillMaxWidth()
             .height(bannerHeight)
-            .padding(15.dp)
+            .padding(horizontal = 15.dp).padding(bottom = 10.dp)
+
 
     ) {
 
@@ -84,11 +83,13 @@ fun DiscountBanner(discount: Discount) {
             painter = discount.imagePainter,
             contentDescription = "Discount Image Banner",
             contentScale = ContentScale.Fit,
+
+            alignment = Alignment.BottomEnd,
             modifier = Modifier
                 .align(
                     Alignment.TopEnd
                 )
-                .padding(end = 25.dp)
+                .padding(start = 20.dp, bottom = 20.dp)
                 .size(bannerHeight)
 
 
