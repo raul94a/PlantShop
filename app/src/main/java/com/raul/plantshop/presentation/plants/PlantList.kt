@@ -43,6 +43,7 @@ import com.raul.plantshop.ui.theme.mainText
 fun PlantList(
     modifier: Modifier = Modifier,
     plants: List<Plant>,
+    addToCart: (Plant) ->Unit,
     onTapCard: (String) -> Unit
 ) {
     LazyRow(
@@ -57,7 +58,7 @@ fun PlantList(
         items(plants.size) { i ->
             val plant = plants[i]
             key(plant.id) {
-                PlantItem(plant = plant) {
+                PlantItem(plant = plant, addToCart = addToCart) {
                     onTapCard(it)
                 }
             }
@@ -67,7 +68,9 @@ fun PlantList(
 }
 
 @Composable
-fun PlantItem(modifier: Modifier = Modifier, plant: Plant, onTapCard: (String) -> Unit) {
+fun PlantItem(modifier: Modifier = Modifier, plant: Plant,
+              addToCart: (Plant) ->Unit,
+              onTapCard: (String) -> Unit) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -117,7 +120,7 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant, onTapCard: (String) -
                 modifier = Modifier,
 
                 onClick = {
-                    //AddToCart
+                   addToCart(plant)
                 }) {
                 Text(
                     stringResource(R.string.add_cart),

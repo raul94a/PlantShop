@@ -18,4 +18,6 @@
     <string name="height">Altura</string>
     <string name="humidity">Humedad</string>
     <string name="price">Precio</string>
+    <string name="piece">unidad</string>
+    <string name="pieces">unidades</string>
 </resources>

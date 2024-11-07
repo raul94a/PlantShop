@@ -3,6 +3,8 @@ package com.raul.plantshop.presentation.plants
 import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.raul.plantshop.domain.cart.PlantItem
+import com.raul.plantshop.domain.cart.ShoppingCart
 import com.raul.plantshop.domain.plants.Plant
 import com.raul.plantshop.domain.plants.PlantCategory
 import com.raul.plantshop.domain.plants.PlantRepository
@@ -16,7 +18,8 @@ import kotlinx.coroutines.withContext
 
 data class PlantState(
     val plants: List<Plant> = emptyList(),
-    val selectedCategory: PlantCategory = PlantCategory.All
+    val selectedCategory: PlantCategory = PlantCategory.All,
+    val shoppingCart: ShoppingCart = ShoppingCart(mutableMapOf())
 ) {
     fun getByCategory(): List<Plant>{
 
@@ -78,6 +81,24 @@ class PlantsViewModel(private val plantRepository: PlantRepository) : ViewModel(
                 }
             }
             currentState.copy(plants = updatedPlants)
+        }
+    }
+
+    fun addItemToCart(plant: Plant) {
+        _homeState.update {
+            val cart = it.shoppingCart
+            cart.addItem(plant)
+            val items = cart.items
+            it.copy(shoppingCart = ShoppingCart(items))
+        }
+    }
+
+    fun removeItemFromCart(plant: Plant) {
+        _homeState.update {
+            val cart = it.shoppingCart
+            cart.removeItem(plant)
+            val items = cart.items
+            it.copy(shoppingCart = ShoppingCart(items))
         }
     }
 
