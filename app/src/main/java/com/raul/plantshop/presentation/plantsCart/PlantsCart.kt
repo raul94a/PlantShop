@@ -131,11 +131,11 @@ fun PlantsCart(
                     )
                 )
             }
-            ElevatedButton(
-                modifier = Modifier.padding(top = 25.dp),
-                onClick = {}) {
-                Text("Proceder con el pago")
-            }
+//            ElevatedButton(
+//                modifier = Modifier.padding(top = 25.dp),
+//                onClick = {}) {
+//                Text("Proceder con el pago")
+//            }
 
 
         }

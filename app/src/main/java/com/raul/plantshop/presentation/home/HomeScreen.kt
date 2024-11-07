@@ -34,7 +34,7 @@ fun HomeScreen(
 
     Scaffold(modifier = Modifier.fillMaxSize().fillMaxHeight(1f),
         bottomBar = {
-            BottomNavigationBar(navController, pageIndex) {
+            BottomNavigationBar(navController, pageIndex,viewModel) {
                 pageIndex = it
             }
         }

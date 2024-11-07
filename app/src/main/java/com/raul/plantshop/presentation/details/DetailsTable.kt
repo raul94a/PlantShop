@@ -43,7 +43,7 @@ import com.raul.plantshop.ui.theme.subtitle
 data class DetailsColumn(val title: String, val value: String)
 
 @Composable
-fun DetailsTable(modifier: Modifier = Modifier, plant: Plant) {
+fun DetailsTable(modifier: Modifier = Modifier, plant: Plant, onAddToCart: (Plant) -> Unit) {
     val columns = listOf(
         DetailsColumn(
             stringResource(R.string.size),
@@ -161,7 +161,7 @@ fun DetailsTable(modifier: Modifier = Modifier, plant: Plant) {
                 shape = RoundedCornerShape(20.dp),
                 border = BorderStroke(0.dp, Color.Transparent),
                 onClick = {
-                    // ADD TO CART
+                    onAddToCart(plant)
                 }) {
                 Text(
                     stringResource(R.string.add_cart),

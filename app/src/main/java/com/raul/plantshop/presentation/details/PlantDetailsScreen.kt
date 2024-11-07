@@ -106,6 +106,9 @@ fun PlantDetailsScreen(
                     .fillMaxWidth()
                     .padding(bottom = 5.dp),
                 plant = plant,
+                onAddToCart = {
+                    viewModel.addItemToCart(it)
+                }
             )
 
 
