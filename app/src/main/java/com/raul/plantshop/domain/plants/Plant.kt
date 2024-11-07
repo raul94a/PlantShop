@@ -74,6 +74,7 @@ fun Plant.toPlantData() : PlantData {
         humidity = this.humidity,
         price = this.price,
         category = category,
+        isFav = this.isFav,
         rating = this.rating?.reviews ?: emptyList()
     )
 }

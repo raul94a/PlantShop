@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.raul.plantshop.R
 import com.raul.plantshop.domain.plants.Plant
+import com.raul.plantshop.presentation.plants.PlantsViewModel
 import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.buttonColor
 import com.raul.plantshop.ui.theme.headerGrey
@@ -53,7 +54,12 @@ import com.raul.plantshop.ui.theme.subtitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlantDetailsScreen(modifier: Modifier = Modifier, plant: Plant, navController: NavController) {
+fun PlantDetailsScreen(
+    modifier: Modifier = Modifier,
+    plant: Plant,
+    navController: NavController,
+    viewModel: PlantsViewModel
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
 
@@ -68,7 +74,9 @@ fun PlantDetailsScreen(modifier: Modifier = Modifier, plant: Plant, navControlle
                     DetailsAppBarRow(
                         modifier = Modifier,
                         isFav = plant.isFav,
-                        onToggleFavs = {},
+                        onToggleFavs = {
+                            viewModel.updatePlantFavorite(plant.id)
+                        },
                         onNavigateBack = {
                             navController.navigateUp()
                         }
@@ -81,8 +89,7 @@ fun PlantDetailsScreen(modifier: Modifier = Modifier, plant: Plant, navControlle
         Column(
             modifier
                 .padding(innerPadding)
-                .fillMaxSize()
-             ,
+                .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
 //            horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -97,8 +104,7 @@ fun PlantDetailsScreen(modifier: Modifier = Modifier, plant: Plant, navControlle
             DetailsTable(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(bottom = 5.dp)
-                   ,
+                    .padding(bottom = 5.dp),
                 plant = plant,
             )
 
@@ -118,7 +124,8 @@ fun DetailsAppBarRow(
     Row(
         modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp).padding(end = 15.dp),
+            .padding(horizontal = 10.dp)
+            .padding(end = 15.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

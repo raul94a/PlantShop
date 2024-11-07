@@ -7,17 +7,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
-import com.raul.plantshop.presentation.plants.HomeViewModel
-import com.raul.plantshop.presentation.plants.PlantList
+import com.raul.plantshop.presentation.plants.PlantsViewModel
 import com.raul.plantshop.presentation.plants.PlantsScreen
 import com.raul.plantshop.presentation.profile.ProfileScreen
 
@@ -25,7 +21,7 @@ import com.raul.plantshop.presentation.profile.ProfileScreen
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel,
+    viewModel: PlantsViewModel,
     navController: NavController
 ) {
 

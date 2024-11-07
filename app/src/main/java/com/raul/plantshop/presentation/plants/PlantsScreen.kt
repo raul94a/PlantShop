@@ -1,6 +1,5 @@
 package com.raul.plantshop.presentation.plants
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -13,7 +12,7 @@ import com.raul.plantshop.R
 
 @Composable
 fun PlantsScreen(
-    modifier: Modifier = Modifier, viewModel: HomeViewModel,
+    modifier: Modifier = Modifier, viewModel: PlantsViewModel,
     navController: NavController
 ) {
 
@@ -32,7 +31,7 @@ fun PlantsScreen(
     }
 
     val uiState =
-        viewModel.homeStateFlow.collectAsState(HomeState()).value
+        viewModel.homeStateFlow.collectAsState(PlantState()).value
 
 
 

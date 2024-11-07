@@ -18,7 +18,7 @@ import com.raul.plantshop.data.plant.PlantData
 import com.raul.plantshop.data.plant.toPlant
 import com.raul.plantshop.presentation.details.PlantDetailsScreen
 import com.raul.plantshop.presentation.home.HomeScreen
-import com.raul.plantshop.presentation.plants.HomeViewModel
+import com.raul.plantshop.presentation.plants.PlantsViewModel
 import com.raul.plantshop.presentation.profile.ProfileScreen
 import androidx.navigation.compose.NavHost
 import com.raul.plantshop.data.plant.PlantRepositoryImpl
@@ -26,20 +26,19 @@ import com.raul.plantshop.data.plant.PlantsApiImpl
 
 @Composable
 fun PlantsNavGraph(navController: NavHostController) {
-
+    val api = PlantsApiImpl()
+    val repo = PlantRepositoryImpl(api);
+    val viewModel = PlantsViewModel(repo)
     NavHost(navController = navController, startDestination = "/Home") {
-        addPlantScreen(navController)
-        addPlantDetails(navController)
-        addProfileScreen(navController)
+        addPlantScreen(navController,viewModel)
+        addPlantDetails(navController,viewModel)
     }
 
 }
 
 
-fun NavGraphBuilder.addPlantScreen(navController: NavController) {
-    val api = PlantsApiImpl()
-    val repo = PlantRepositoryImpl(api);
-    val viewModel = HomeViewModel(repo)
+fun NavGraphBuilder.addPlantScreen(navController: NavController,viewModel: PlantsViewModel) {
+
     composable(route = "/Home") {
         var initialApiCalled by rememberSaveable { mutableStateOf(false) }
         if (!initialApiCalled) {
@@ -53,7 +52,7 @@ fun NavGraphBuilder.addPlantScreen(navController: NavController) {
     }
 }
 
-fun NavGraphBuilder.addPlantDetails(navController: NavController) {
+fun NavGraphBuilder.addPlantDetails(navController: NavController, viewModel: PlantsViewModel) {
     composable(route = "/Details/{data}", arguments = listOf(navArgument("data") {
         type = NavType.StringType
     })) { navBackStackEntry ->
@@ -65,13 +64,7 @@ fun NavGraphBuilder.addPlantDetails(navController: NavController) {
 
         val gson = Gson()
         val plant = gson.fromJson(data, PlantData::class.java)
-        PlantDetailsScreen(plant = plant.toPlant(), navController = navController)
+        PlantDetailsScreen(plant = plant.toPlant(), navController = navController,viewModel = viewModel)
     }
 }
 
-fun NavGraphBuilder.addProfileScreen(navController: NavController){
-    composable(route = "/Profile") {
-
-        ProfileScreen(navController = navController)
-    }
-}

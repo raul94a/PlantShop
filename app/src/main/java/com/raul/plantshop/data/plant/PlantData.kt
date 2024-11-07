@@ -12,6 +12,7 @@ data class PlantData(
     val name: String,
     val description: String,
     val imageUri: String,
+    val isFav: Boolean,
     val size: Double,
     val humidity: Int,
     val price: Double,
@@ -33,6 +34,7 @@ fun PlantData.toPlant(): Plant {
         imageUri = this.imageUri,
         size = this.size,
         humidity = this.humidity,
+        isFav = this.isFav,
         price = this.price,
         category = category,
         rating = Rating(this.rating?.toMutableList() ?: mutableListOf())

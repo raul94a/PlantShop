@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-data class HomeState(
+data class PlantState(
     val plants: List<Plant> = emptyList(),
     val selectedCategory: PlantCategory = PlantCategory.All
 ) {
@@ -39,9 +39,10 @@ data class HomeState(
     }
 }
 
-class HomeViewModel(private val plantRepository: PlantRepository) : ViewModel() {
 
-    private var _homeState = MutableStateFlow(HomeState())
+class PlantsViewModel(private val plantRepository: PlantRepository) : ViewModel() {
+
+    private var _homeState = MutableStateFlow(PlantState())
 
     val homeStateFlow = _homeState.shareIn(
         scope = viewModelScope,
@@ -65,6 +66,19 @@ class HomeViewModel(private val plantRepository: PlantRepository) : ViewModel() 
 
     fun updateCategory(category: PlantCategory) {
         _homeState.update { it.copy(selectedCategory = category) }
+    }
+
+    fun updatePlantFavorite(id: String) {
+        _homeState.update { currentState ->
+            val updatedPlants = currentState.plants.map { plant ->
+                if (plant.id == id) {
+                    plant.copy(isFav = !plant.isFav)
+                } else {
+                    plant
+                }
+            }
+            currentState.copy(plants = updatedPlants)
+        }
     }
 
 

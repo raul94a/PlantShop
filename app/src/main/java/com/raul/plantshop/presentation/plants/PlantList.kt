@@ -40,7 +40,11 @@ import com.raul.plantshop.ui.theme.cardContentColor
 import com.raul.plantshop.ui.theme.mainText
 
 @Composable
-fun PlantList(modifier: Modifier = Modifier, plants: List<Plant>, onTapCard: (String) -> Unit) {
+fun PlantList(
+    modifier: Modifier = Modifier,
+    plants: List<Plant>,
+    onTapCard: (String) -> Unit
+) {
     LazyRow(
         modifier = modifier
             .fillMaxSize(1f)
@@ -53,7 +57,7 @@ fun PlantList(modifier: Modifier = Modifier, plants: List<Plant>, onTapCard: (St
         items(plants.size) { i ->
             val plant = plants[i]
             key(plant.id) {
-                PlantItem(plant = plant){
+                PlantItem(plant = plant) {
                     onTapCard(it)
                 }
             }
@@ -97,7 +101,8 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant, onTapCard: (String) -
             style = Typography.titleMedium,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(10.dp).padding(end = 5.dp)
+                .padding(10.dp)
+                .padding(end = 5.dp)
         )
         Row(
 
