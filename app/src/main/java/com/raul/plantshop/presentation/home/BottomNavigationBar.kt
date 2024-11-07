@@ -2,8 +2,11 @@ package com.raul.plantshop.presentation.home
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -34,7 +37,16 @@ private data class BottomNavigationItem(
                 icon = Icons.Outlined.Home,
                 route = Screens.Home.route
             ),
-
+            BottomNavigationItem(
+                label = "Favs",
+                icon = Icons.Outlined.FavoriteBorder,
+                route = Screens.Favs.route
+            ),
+            BottomNavigationItem(
+                label = "Cart",
+                icon = Icons.Outlined.ShoppingCart,
+                route = Screens.Cart.route
+            ),
             BottomNavigationItem(
                 label = "Profile",
                 icon = Icons.Outlined.Person,
@@ -49,16 +61,13 @@ fun BottomNavigationBar(navController: NavController, selectedIndex: Int, onSele
     NavigationBar {
 
 
-
-
-
         BottomNavigationItem().bottomNavigationItems().forEachIndexed { index, navigationItem ->
 
             NavigationBarItem(
                 selected = index == selectedIndex,
-                label = {
-                    Text(navigationItem.label)
-                },
+//                label = {
+//                    Text(navigationItem.label)
+//                },
                 icon = {
                     Icon(
                         navigationItem.icon,
@@ -66,10 +75,9 @@ fun BottomNavigationBar(navController: NavController, selectedIndex: Int, onSele
                     )
                 },
                 onClick = {
-                   onSelect(index)
+                    onSelect(index)
                 }
             )
-
 
 
         }

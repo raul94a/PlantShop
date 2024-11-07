@@ -26,12 +26,14 @@ fun PlantsScreen(
             percetageDiscount = 30
         )
     )
-    CategoryTabs {
+    val uiState =
+        viewModel.homeStateFlow.collectAsState(PlantState()).value
+
+    CategoryTabs(selected = uiState.selectedCategory) {
         viewModel.updateCategory(it)
     }
 
-    val uiState =
-        viewModel.homeStateFlow.collectAsState(PlantState()).value
+
 
 
 

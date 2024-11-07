@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FavoriteBorder
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -54,7 +55,7 @@ fun HomeHeader(modifier: Modifier? = null, onClickFavorites: () -> Unit) {
 
                 .padding(0.dp)
         ) {
-            Icon(imageVector = Icons.Rounded.FavoriteBorder, contentDescription = "Search for favorites")
+            Icon(imageVector = Icons.Rounded.Search, contentDescription = "Search for favorites")
         }
     }
 }
