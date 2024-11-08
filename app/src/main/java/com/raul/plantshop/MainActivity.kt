@@ -25,26 +25,7 @@ sealed class Screens(val route: String) {
 
 
 class MainActivity : ComponentActivity() {
-
-    private val paymentDataLauncher = registerForActivityResult(TaskResultContracts.GetPaymentDataResult()) { taskResult ->
-        when (taskResult.status.statusCode) {
-            CommonStatusCodes.SUCCESS -> {
-                taskResult.result!!.let {
-                    Log.i("Google Pay result:", it.toJson())
-                    model.setPaymentData(it)
-                }
-            }
-            CommonStatusCodes.CANCELED -> Log.e("ERROR", "${taskResult.result}")
-            AutoResolveHelper.RESULT_ERROR ->  Log.e("ERROR", "${taskResult.result}")
-            CommonStatusCodes.INTERNAL_ERROR -> Log.e("ERROR", "${taskResult.result}")
-        }
-    }
     private val model: CheckoutViewModel by viewModels()
-
-    private fun requestPayment() {
-        val task = model.getLoadPaymentDataTask(priceCents = 1000L)
-        task.addOnCompleteListener(paymentDataLauncher::launch)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,4 +44,3 @@ class MainActivity : ComponentActivity() {
 
 }
 
-lateinit var requestPaymentInjector :  Unit

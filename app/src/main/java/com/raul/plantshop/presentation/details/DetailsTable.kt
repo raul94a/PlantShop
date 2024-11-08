@@ -109,7 +109,7 @@ fun DetailsTable(modifier: Modifier = Modifier, plant: Plant, onAddToCart: (Plan
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            columns.forEachIndexed { i, column ->
+            columns.forEachIndexed { _, column ->
 
                 Column {
                     Text(

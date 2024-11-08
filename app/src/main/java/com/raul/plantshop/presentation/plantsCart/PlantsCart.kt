@@ -225,7 +225,7 @@ fun GooglePayButton(
             task.addOnCompleteListener(paymentDataLauncher::launch)
         }
         PayButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             onClick = { requestPayment() },
             allowedPaymentMethods = PaymentsUtil.allowedPaymentMethods.toString(),
             radius = 8.dp,

@@ -1,6 +1,9 @@
 package com.raul.plantshop.presentation.plants
 
+import android.os.Build
 import android.util.Log
+import android.widget.Toast
+import android.widget.Toast.Callback
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,11 +27,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +47,9 @@ import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.cardContentColor
 import com.raul.plantshop.ui.theme.mainText
 import com.raul.plantshop.ui.theme.subtitle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun PlantList(
@@ -79,6 +87,10 @@ fun PlantItem(
     onToggleFav: (Plant) -> Unit,
     onTapCard: (String) -> Unit
 ) {
+    val context = LocalContext.current
+    val addedItemStringResource = plant.name + " " + stringResource(R.string.item_added)
+    var itemSelected = false
+    val coroutineScope = rememberCoroutineScope()
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,11 +136,22 @@ fun PlantItem(
                 .padding(bottom = 5.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+
             ElevatedButton(
                 modifier = Modifier,
 
                 onClick = {
+                    if (itemSelected) return@ElevatedButton
+                    itemSelected = true
                     addToCart(plant)
+                    val toast =
+                        Toast.makeText(context, addedItemStringResource, Toast.LENGTH_SHORT)
+                    toast.show()
+
+                    coroutineScope.launch {
+                        Thread.sleep(200)
+                        itemSelected = false
+                    }
                 }) {
                 Text(
                     stringResource(R.string.add_cart),

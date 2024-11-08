@@ -22,6 +22,8 @@
     <string name="no_favs">No favorites selected</string>
     <string name="no_items">Shopping cart is empty!</string>
     <string name="shoppingpayment">Successful payment!</string>
+    <string name="item_added"> added to cart!</string>
+
 
 
 
