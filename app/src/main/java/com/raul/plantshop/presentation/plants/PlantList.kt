@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,6 +41,7 @@ import com.raul.plantshop.domain.plants.toPlantData
 import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.cardContentColor
 import com.raul.plantshop.ui.theme.mainText
+import com.raul.plantshop.ui.theme.subtitle
 
 @Composable
 fun PlantList(
@@ -146,7 +148,7 @@ fun PlantItem(
                 }) {
                 Image(
 
-                    imageVector = if(plant.isFav) Icons.Filled.Favorite else Icons.Rounded.FavoriteBorder,
+                    imageVector = if (plant.isFav) Icons.Filled.Favorite else Icons.Rounded.FavoriteBorder,
                     colorFilter = ColorFilter.tint(color = Color.White),
                     contentDescription = ""
                 )
@@ -154,15 +156,22 @@ fun PlantItem(
             }
 
         }
-
-        Text(
-            plant.name,
+        Column(
             Modifier
                 .align(Alignment.TopStart)
-                .padding(top = 35.dp, start = 10.dp),
+                .padding(10.dp)
+                .padding(start = 5.dp)
+        ) {
 
-            style = Typography.bodyMedium.copy(fontWeight = FontWeight.W600, fontSize = 21.sp),
+            Text(
+                plant.name,
 
+                style = Typography.bodyMedium.copy(fontWeight = FontWeight.W600, fontSize = 21.sp),
             )
+            Text(
+                plant.getCategoryResource(),
+                style = Typography.bodyMedium.copy(fontSize = 16.sp, color = subtitle),
+            )
+        }
     }
 }

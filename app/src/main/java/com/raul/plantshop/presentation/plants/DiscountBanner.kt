@@ -36,11 +36,11 @@ data class Discount(
 )
 
 @Composable
-fun DiscountBanner(discount: Discount) {
+fun DiscountBanner(modifier: Modifier,discount: Discount) {
 
     val bannerHeight = remember { 175.dp }
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(bannerHeight)
             .padding(horizontal = 15.dp).padding(bottom = 10.dp)

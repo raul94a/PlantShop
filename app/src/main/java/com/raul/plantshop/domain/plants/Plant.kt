@@ -1,5 +1,7 @@
 package com.raul.plantshop.domain.plants
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.raul.plantshop.R
 import com.raul.plantshop.data.plant.PlantData
 import com.raul.plantshop.data.plant.toPlant
@@ -10,7 +12,7 @@ import kotlinx.serialization.Serializable
 data class Plant(
     val id: String,
     val name: String,
-    val isFav : Boolean = false,
+    val isFav: Boolean = false,
     val description: String,
     val imageUri: String,
     val size: Double,
@@ -56,10 +58,18 @@ data class Plant(
         }
     }
 
+    @Composable
+    fun getCategoryResource(): String {
+        return when (category) {
+            PlantCategory.Indoor -> stringResource(R.string.indoor)
+            else -> stringResource(R.string.outdoor)
+        }
+    }
+
 
 }
 
-fun Plant.toPlantData() : PlantData {
+fun Plant.toPlantData(): PlantData {
     val category = if (this.category == PlantCategory.Indoor) {
         "Indoor"
     } else {
