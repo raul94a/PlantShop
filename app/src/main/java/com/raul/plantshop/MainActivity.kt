@@ -55,9 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             PlantShopTheme {
-                PlantsNavGraph(navController = navController, model, onRequestPayment = {
-                    requestPayment()
-                } )
+                PlantsNavGraph(navController = navController, model)
 
             }
         }

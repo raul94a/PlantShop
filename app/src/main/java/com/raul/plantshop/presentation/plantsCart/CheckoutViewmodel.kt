@@ -117,6 +117,9 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
 
         _paymentUiState.update { payState }
     }
+    fun refreshPaymentState(){
+        _paymentUiState.update { PaymentUiState.Available }
+    }
 
     private fun extractPaymentBillingName(paymentData: PaymentData): String? {
         val paymentInformation = paymentData.toJson()

@@ -19,6 +19,11 @@
     <string name="price">Precio</string>
     <string name="piece">piece</string>
     <string name="pieces">pieces</string>
+    <string name="no_favs">No favorites selected</string>
+    <string name="no_items">Shopping cart is empty!</string>
+    <string name="shoppingpayment">Successful payment!</string>
+
+
 
 
 

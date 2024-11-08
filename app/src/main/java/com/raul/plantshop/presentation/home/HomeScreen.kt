@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.raul.plantshop.presentation.plants.FavoritesScreen
 import com.raul.plantshop.presentation.plants.PlantsViewModel
 import com.raul.plantshop.presentation.plants.PlantsScreen
 import com.raul.plantshop.presentation.plantsCart.CheckoutViewModel
@@ -26,8 +27,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: PlantsViewModel,
     navController: NavController,
-    checkoutViewModel: CheckoutViewModel,
-    onRequestPayment: () -> Unit
+    checkoutViewModel: CheckoutViewModel
 ) {
 
 
@@ -53,12 +53,19 @@ fun HomeScreen(
 
             when (pageIndex) {
                 0 -> PlantsScreen(Modifier, viewModel, navController)
-                1 -> Text("hola")
+                1 -> FavoritesScreen(viewModel = viewModel)
                 2 -> {
-                    val uiState =
-                        checkoutViewModel.paymentUiState.collectAsStateWithLifecycle().value
 
-                    PlantsCart(Modifier, viewModel, navController, uiState, onRequestPayment)
+
+                    PlantsCart(
+                        Modifier,
+                        viewModel,
+                        onBackToHome = {
+                            pageIndex = 0
+                            viewModel.clearShoppingCart()
+                        },
+                        checkoutViewModel = checkoutViewModel
+                    )
                 }
 
                 3 -> ProfileScreen(Modifier, navController)

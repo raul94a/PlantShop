@@ -20,4 +20,10 @@
     <string name="price">Precio</string>
     <string name="piece">unidad</string>
     <string name="pieces">unidades</string>
+    <string name="no_favs">No hay favoritos</string>
+    <string name="no_items">¡La cesta de la compra está vacía!</string>
+    <string name="shoppingpayment">¡Pago realizado con éxito!</string>
+
+
+
 </resources>

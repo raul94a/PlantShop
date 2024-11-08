@@ -21,9 +21,9 @@ data class PlantState(
     val selectedCategory: PlantCategory = PlantCategory.All,
     val shoppingCart: ShoppingCart = ShoppingCart(mutableMapOf())
 ) {
-    fun getByCategory(): List<Plant>{
+    fun getByCategory(): List<Plant> {
 
-        return when(selectedCategory){
+        return when (selectedCategory) {
             PlantCategory.All -> plants
             PlantCategory.Indoor -> plants.filter { it.category == selectedCategory }
             PlantCategory.Outdoor -> plants.filter { it.category == selectedCategory }
@@ -31,14 +31,17 @@ data class PlantState(
         }
 
 
-
     }
 
-    private fun calculatePopulars() : List<Plant>{
+    fun getFavorites(): List<Plant> {
+        return plants.filter { it.isFav }
+    }
+
+    private fun calculatePopulars(): List<Plant> {
         val sortedPlants = plants.sortedByDescending { it.rating?.reviews?.size }
         val length = plants.size
-        val endIndex = if(length >= 5) 5 else length
-        return sortedPlants.subList(0,endIndex)
+        val endIndex = if (length >= 5) 5 else length
+        return sortedPlants.subList(0, endIndex)
     }
 }
 
@@ -54,9 +57,9 @@ class PlantsViewModel(private val plantRepository: PlantRepository) : ViewModel(
     )
 
 
-    fun loadPlants(resources: Resources){
+    fun loadPlants(resources: Resources) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 val plants = plantRepository.loadPlantsResources(resources)
                 _homeState.update {
                     it.copy(
@@ -102,7 +105,11 @@ class PlantsViewModel(private val plantRepository: PlantRepository) : ViewModel(
         }
     }
 
-
+    fun clearShoppingCart() {
+        _homeState.update {
+            it.copy(shoppingCart = ShoppingCart(mutableMapOf()))
+        }
+    }
 
 
 }

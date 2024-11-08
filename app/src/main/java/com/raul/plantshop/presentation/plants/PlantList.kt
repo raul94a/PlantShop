@@ -1,5 +1,6 @@
 package com.raul.plantshop.presentation.plants
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.IconButton
@@ -43,7 +45,8 @@ import com.raul.plantshop.ui.theme.mainText
 fun PlantList(
     modifier: Modifier = Modifier,
     plants: List<Plant>,
-    addToCart: (Plant) ->Unit,
+    addToCart: (Plant) -> Unit,
+    onToggleFav: (Plant) -> Unit,
     onTapCard: (String) -> Unit
 ) {
     LazyRow(
@@ -58,7 +61,7 @@ fun PlantList(
         items(plants.size) { i ->
             val plant = plants[i]
             key(plant.id) {
-                PlantItem(plant = plant, addToCart = addToCart) {
+                PlantItem(plant = plant, addToCart = addToCart, onToggleFav = onToggleFav) {
                     onTapCard(it)
                 }
             }
@@ -68,9 +71,12 @@ fun PlantList(
 }
 
 @Composable
-fun PlantItem(modifier: Modifier = Modifier, plant: Plant,
-              addToCart: (Plant) ->Unit,
-              onTapCard: (String) -> Unit) {
+fun PlantItem(
+    modifier: Modifier = Modifier, plant: Plant,
+    addToCart: (Plant) -> Unit,
+    onToggleFav: (Plant) -> Unit,
+    onTapCard: (String) -> Unit
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -120,7 +126,7 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant,
                 modifier = Modifier,
 
                 onClick = {
-                   addToCart(plant)
+                    addToCart(plant)
                 }) {
                 Text(
                     stringResource(R.string.add_cart),
@@ -136,11 +142,11 @@ fun PlantItem(modifier: Modifier = Modifier, plant: Plant,
 
                     .background(color = mainText, shape = CircleShape),
                 onClick = {
-                    // add favorite
+                    onToggleFav(plant)
                 }) {
                 Image(
 
-                    imageVector = Icons.Rounded.FavoriteBorder,
+                    imageVector = if(plant.isFav) Icons.Filled.Favorite else Icons.Rounded.FavoriteBorder,
                     colorFilter = ColorFilter.tint(color = Color.White),
                     contentDescription = ""
                 )

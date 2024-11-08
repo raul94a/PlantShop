@@ -27,15 +27,14 @@ import com.raul.plantshop.presentation.plantsCart.CheckoutViewModel
 @Composable
 fun PlantsNavGraph(
     navController: NavHostController,
-    model: CheckoutViewModel,
-    onRequestPayment: () -> Unit
+    model: CheckoutViewModel
 ) {
     val api = PlantsApiImpl()
     val repo = PlantRepositoryImpl(api);
     val viewModel = PlantsViewModel(repo)
 
     NavHost(navController = navController, startDestination = "/Home") {
-        addPlantScreen(navController, viewModel, model, onRequestPayment)
+        addPlantScreen(navController, viewModel, model)
         addPlantDetails(navController, viewModel)
     }
 
@@ -45,8 +44,7 @@ fun PlantsNavGraph(
 fun NavGraphBuilder.addPlantScreen(
     navController: NavController,
     viewModel: PlantsViewModel,
-    checkoutViewModel: CheckoutViewModel,
-    onRequestPayment: () -> Unit
+    checkoutViewModel: CheckoutViewModel
 ) {
 
     composable(route = "/Home") {
@@ -61,8 +59,7 @@ fun NavGraphBuilder.addPlantScreen(
         HomeScreen(
             viewModel = viewModel,
             checkoutViewModel = checkoutViewModel,
-            navController = navController,
-            onRequestPayment = onRequestPayment
+            navController = navController
         )
     }
 }

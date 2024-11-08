@@ -50,6 +50,7 @@ fun PlantsScreen(
             plants = uiState.getByCategory(),
             modifier = Modifier.padding(start = 10.dp),
             addToCart = { viewModel.addItemToCart(it) },
+            onToggleFav = { viewModel.updatePlantFavorite(it.id) },
             onTapCard = {
                 navController.navigate(route = "/Details/$it")
             })

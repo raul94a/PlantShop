@@ -1,5 +1,8 @@
 package com.raul.plantshop.presentation.plantsCart
 
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,9 +55,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.internal.Constants
+import com.google.android.gms.wallet.AutoResolveHelper
 import com.google.android.gms.wallet.Wallet
+import com.google.android.gms.wallet.contract.TaskResultContracts
 import com.google.pay.button.ButtonTheme
 import com.google.pay.button.ButtonType
 import com.google.pay.button.PayButton
@@ -72,14 +79,17 @@ import java.math.RoundingMode
 
 @Composable
 fun PlantsCart(
-    modifier: Modifier = Modifier, viewModel: PlantsViewModel, navController: NavController,
+    modifier: Modifier = Modifier,
+    viewModel: PlantsViewModel,
+    onBackToHome: () -> Unit,
+    checkoutViewModel: CheckoutViewModel,
 
-    paymentUiState: PaymentUiState,
-    onClickPayButton: () -> Unit
-) {
+    ) {
+
+
     val shoppingCart =
         viewModel.homeStateFlow.collectAsState(initial = PlantState()).value.shoppingCart
-    println("Shopping Cart: ${shoppingCart.items}")
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -90,12 +100,25 @@ fun PlantsCart(
 
         if (shoppingCart.isEmpty()) {
 
-            Text(
-                "Empty!", textAlign = TextAlign.Center, modifier = Modifier
+            Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.undraw_shopping),
+                        contentDescription = stringResource(R.string.no_items),
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier.size(250.dp)
+                    )
+                    Text(
+                        stringResource(R.string.no_items),
 
-                    .fillMaxSize(1F)
-                    .fillMaxHeight(1F)
-            )
+                        style = Typography.bodyLarge, modifier = Modifier.padding(top = 16.dp)
+                    )
+                }
+            }
 
 
         } else {
@@ -106,8 +129,7 @@ fun PlantsCart(
                 items(count = items.size) { index ->
                     val item = items[index]
                     key(item.plant.id) {
-                        CartPlantItem(modifier = Modifier
-                            .height(110.dp),
+                        CartPlantItem(modifier = Modifier.height(110.dp),
                             item = item,
                             onRemoveQuantity = { plant ->
                                 viewModel.removeItemFromCart(plant)
@@ -124,50 +146,91 @@ fun PlantsCart(
 
 
             Spacer(modifier = Modifier.height(25.dp))
-            Column(
-
-
-            ) {
-
-
+            Column(Modifier.padding(top = 8.dp, bottom = 8.dp)) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            buttonColor.copy(alpha = 0.2f),
-                            shape = RoundedCornerShape(12.dp)
+                            buttonColor.copy(alpha = 0.2f), shape = RoundedCornerShape(12.dp)
                         )
-                        .padding(15.dp), verticalAlignment =
-                    Alignment.CenterVertically,
+                        .padding(15.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        "Total",
-                        style = Typography.bodyLarge.copy(
+                        "Total", style = Typography.bodyLarge.copy(
                             fontWeight = FontWeight.Bold
                         )
                     )
                     Text(
-                        "$${shoppingCart.getTotal()}",
-                        style = Typography.bodyLarge.copy(
-                            fontSize = 26.sp,
-                            fontWeight = FontWeight.Bold
+                        "$${shoppingCart.getTotal()}", style = Typography.bodyLarge.copy(
+                            fontSize = 26.sp, fontWeight = FontWeight.Bold
                         )
                     )
                 }
             }
-
-
-
-            PayButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = onClickPayButton,
-                allowedPaymentMethods = PaymentsUtil.allowedPaymentMethods.toString(),
-                radius = 8.dp,
-                theme = ButtonTheme.Light
-            )
-
+            GooglePayButton(
+                Modifier.padding(top = 8.dp, bottom = 8.dp),
+                shoppingCart.getTotal().toDouble(),
+                checkoutViewModel
+            ) {
+                onBackToHome()
+            }
         }
+    }
+}
+
+@Composable
+fun GooglePayButton(
+    modifier: Modifier = Modifier,
+    total: Double,
+    checkoutViewModel: CheckoutViewModel,
+    onNavigateBack: () -> Unit
+) {
+    val context = LocalContext.current
+    val state = checkoutViewModel.paymentUiState.collectAsStateWithLifecycle().value
+    val successText = stringResource(R.string.shoppingpayment)
+
+    if (state == PaymentUiState.Available) {
+
+
+        val paymentDataLauncher = rememberLauncherForActivityResult(
+            TaskResultContracts.GetPaymentDataResult()
+        ) { taskResult ->
+            Log.i("TASKRESULT", "${taskResult.status}")
+            when (taskResult.status.statusCode) {
+                CommonStatusCodes.SUCCESS -> {
+                    taskResult.result!!.let {
+
+                        checkoutViewModel.setPaymentData(it)
+                        Toast.makeText(
+                            context,
+                            successText,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                        onNavigateBack()
+                        checkoutViewModel.refreshPaymentState()
+                    }
+                }
+
+                CommonStatusCodes.CANCELED -> Log.e("ERROR", "${taskResult.result}")
+                AutoResolveHelper.RESULT_ERROR -> Log.e("ERROR", "${taskResult.result}")
+                CommonStatusCodes.INTERNAL_ERROR -> Log.e("ERROR", "${taskResult.result}")
+            }
+        }
+
+        fun requestPayment() {
+            val task = checkoutViewModel.getLoadPaymentDataTask(priceCents = (total * 100).toLong())
+            task.addOnCompleteListener(paymentDataLauncher::launch)
+        }
+        PayButton(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { requestPayment() },
+            allowedPaymentMethods = PaymentsUtil.allowedPaymentMethods.toString(),
+            radius = 8.dp,
+            theme = ButtonTheme.Light
+        )
     }
 }
 
@@ -211,22 +274,21 @@ fun CartPlantItem(
                 modifier = Modifier.padding(start = 15.dp)
             ) {
                 Text(
-                    item.plant.name,
-                    style = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                    item.plant.name, style = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(
                     "${item.qty} ${
                         if (item.qty > 1) stringResource(R.string.pieces) else stringResource(
                             R.string.piece
                         )
-                    }",
-                    style = Typography.bodyMedium.copy(color = buttonColor)
+                    }", style = Typography.bodyMedium.copy(color = buttonColor)
                 )
             }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center, modifier = Modifier.padding(end = 5.dp)
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(end = 5.dp)
         ) {
 
 
@@ -245,8 +307,7 @@ fun CartPlantItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                Icon(
-                    imageVector = Icons.Outlined.Add,
+                Icon(imageVector = Icons.Outlined.Add,
                     contentDescription = "",
                     modifier = Modifier
                         .clickable {
@@ -259,16 +320,14 @@ fun CartPlantItem(
 
 
 
-                Icon(
-                    painter = painterResource(R.drawable.remove),
+                Icon(painter = painterResource(R.drawable.remove),
                     contentDescription = "",
                     modifier = Modifier
                         .clickable {
                             onRemoveQuantity(item.plant)
                         }
                         .padding(horizontal = 5.dp)
-                        .size(30.dp)
-                )
+                        .size(30.dp))
 
             }
         }
