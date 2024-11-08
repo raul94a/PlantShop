@@ -19,25 +19,35 @@ import com.raul.plantshop.data.plant.toPlant
 import com.raul.plantshop.presentation.details.PlantDetailsScreen
 import com.raul.plantshop.presentation.home.HomeScreen
 import com.raul.plantshop.presentation.plants.PlantsViewModel
-import com.raul.plantshop.presentation.profile.ProfileScreen
 import androidx.navigation.compose.NavHost
 import com.raul.plantshop.data.plant.PlantRepositoryImpl
 import com.raul.plantshop.data.plant.PlantsApiImpl
+import com.raul.plantshop.presentation.plantsCart.CheckoutViewModel
 
 @Composable
-fun PlantsNavGraph(navController: NavHostController) {
+fun PlantsNavGraph(
+    navController: NavHostController,
+    model: CheckoutViewModel,
+    onRequestPayment: () -> Unit
+) {
     val api = PlantsApiImpl()
     val repo = PlantRepositoryImpl(api);
     val viewModel = PlantsViewModel(repo)
+
     NavHost(navController = navController, startDestination = "/Home") {
-        addPlantScreen(navController,viewModel)
-        addPlantDetails(navController,viewModel)
+        addPlantScreen(navController, viewModel, model, onRequestPayment)
+        addPlantDetails(navController, viewModel)
     }
 
 }
 
 
-fun NavGraphBuilder.addPlantScreen(navController: NavController,viewModel: PlantsViewModel) {
+fun NavGraphBuilder.addPlantScreen(
+    navController: NavController,
+    viewModel: PlantsViewModel,
+    checkoutViewModel: CheckoutViewModel,
+    onRequestPayment: () -> Unit
+) {
 
     composable(route = "/Home") {
         var initialApiCalled by rememberSaveable { mutableStateOf(false) }
@@ -48,7 +58,12 @@ fun NavGraphBuilder.addPlantScreen(navController: NavController,viewModel: Plant
                 initialApiCalled = true
             }
         }
-        HomeScreen(viewModel = viewModel, navController = navController)
+        HomeScreen(
+            viewModel = viewModel,
+            checkoutViewModel = checkoutViewModel,
+            navController = navController,
+            onRequestPayment = onRequestPayment
+        )
     }
 }
 
@@ -64,7 +79,11 @@ fun NavGraphBuilder.addPlantDetails(navController: NavController, viewModel: Pla
 
         val gson = Gson()
         val plant = gson.fromJson(data, PlantData::class.java)
-        PlantDetailsScreen(plant = plant.toPlant(), navController = navController,viewModel = viewModel)
+        PlantDetailsScreen(
+            plant = plant.toPlant(),
+            navController = navController,
+            viewModel = viewModel
+        )
     }
 }
 

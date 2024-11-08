@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,6 +45,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,27 +53,38 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.android.gms.common.internal.Constants
+import com.google.android.gms.wallet.Wallet
+import com.google.pay.button.ButtonTheme
+import com.google.pay.button.ButtonType
+import com.google.pay.button.PayButton
 import com.raul.plantshop.R
 import com.raul.plantshop.domain.cart.PlantItem
+import com.raul.plantshop.domain.payments.PaymentsUtil
 import com.raul.plantshop.domain.plants.Plant
 import com.raul.plantshop.presentation.plants.PlantState
 import com.raul.plantshop.presentation.plants.PlantsViewModel
 import com.raul.plantshop.ui.theme.Typography
 import com.raul.plantshop.ui.theme.buttonColor
+import org.json.JSONObject
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 @Composable
 fun PlantsCart(
-    modifier: Modifier = Modifier, viewModel: PlantsViewModel, navController: NavController
+    modifier: Modifier = Modifier, viewModel: PlantsViewModel, navController: NavController,
+
+    paymentUiState: PaymentUiState,
+    onClickPayButton: () -> Unit
 ) {
     val shoppingCart =
         viewModel.homeStateFlow.collectAsState(initial = PlantState()).value.shoppingCart
     println("Shopping Cart: ${shoppingCart.items}")
     Column(
         modifier = modifier
-
+            .fillMaxSize()
             .padding(horizontal = 15.dp)
+
     ) {
 
 
@@ -86,62 +99,78 @@ fun PlantsCart(
 
 
         } else {
+            val items = shoppingCart.values()
+            LazyColumn(
+                modifier = Modifier.weight(0.7f)
+            ) {
+                items(count = items.size) { index ->
+                    val item = items[index]
+                    key(item.plant.id) {
+                        CartPlantItem(modifier = Modifier
+                            .height(110.dp),
+                            item = item,
+                            onRemoveQuantity = { plant ->
+                                viewModel.removeItemFromCart(plant)
+                            },
+                            onAddQuantity = { plant ->
+                                viewModel.addItemToCart(plant)
 
-
-            shoppingCart.values().forEach { item ->
-                key(item.plant.id) {
-                    CartPlantItem(modifier = Modifier
-                        .height(110.dp),
-                        item = item,
-                        onRemoveQuantity = { plant ->
-                            viewModel.removeItemFromCart(plant)
-                        },
-                        onAddQuantity = { plant ->
-                            viewModel.addItemToCart(plant)
-
-                        })
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 15.dp))
+                            })
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 15.dp))
+                    }
                 }
+
             }
 
 
             Spacer(modifier = Modifier.height(25.dp))
+            Column(
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(buttonColor.copy(alpha = 0.2f))
-                    .padding(15.dp), verticalAlignment =
-                Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+
             ) {
-                Text(
-                    "Total",
-                    style = Typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
 
 
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            buttonColor.copy(alpha = 0.2f),
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .padding(15.dp), verticalAlignment =
+                    Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Total",
+                        style = Typography.bodyLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        )
                     )
-                Text(
-                    "$${shoppingCart.getTotal()}",
-                    style = Typography.bodyLarge.copy(
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.Bold
+                    Text(
+                        "$${shoppingCart.getTotal()}",
+                        style = Typography.bodyLarge.copy(
+                            fontSize = 26.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     )
-                )
+                }
             }
-//            ElevatedButton(
-//                modifier = Modifier.padding(top = 25.dp),
-//                onClick = {}) {
-//                Text("Proceder con el pago")
-//            }
 
+
+
+            PayButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onClickPayButton,
+                allowedPaymentMethods = PaymentsUtil.allowedPaymentMethods.toString(),
+                radius = 8.dp,
+                theme = ButtonTheme.Light
+            )
 
         }
-
     }
 }
+
 
 @Composable
 fun CartPlantItem(

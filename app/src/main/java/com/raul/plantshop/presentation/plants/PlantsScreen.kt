@@ -1,7 +1,10 @@
 package com.raul.plantshop.presentation.plants
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -16,33 +19,40 @@ fun PlantsScreen(
     navController: NavController
 ) {
 
-
-    HomeHeader() {}
-    DiscountBanner(
-
-        discount = Discount(
-            imagePainter = painterResource(R.drawable.plant7),
-            rangeDates = "01 - 21 July",
-            percetageDiscount = 30
+    Column(
+        Modifier.verticalScroll(
+            state = rememberScrollState()
         )
-    )
-    val uiState =
-        viewModel.homeStateFlow.collectAsState(PlantState()).value
+    ) {
 
-    CategoryTabs(selected = uiState.selectedCategory) {
-        viewModel.updateCategory(it)
+
+        HomeHeader() {}
+        DiscountBanner(
+
+            discount = Discount(
+                imagePainter = painterResource(R.drawable.plant7),
+                rangeDates = "01 - 21 July",
+                percetageDiscount = 30
+            )
+        )
+        val uiState =
+            viewModel.homeStateFlow.collectAsState(PlantState()).value
+
+        CategoryTabs(selected = uiState.selectedCategory) {
+            viewModel.updateCategory(it)
+        }
+
+
+
+
+
+        PlantList(
+            plants = uiState.getByCategory(),
+            modifier = Modifier.padding(start = 10.dp),
+            addToCart = { viewModel.addItemToCart(it) },
+            onTapCard = {
+                navController.navigate(route = "/Details/$it")
+            })
+        Spacer(modifier = Modifier.padding(top = 10.dp))
     }
-
-
-
-
-
-    PlantList(
-        plants = uiState.getByCategory(),
-        modifier = Modifier.padding(start = 10.dp),
-        addToCart = { viewModel.addItemToCart(it) },
-        onTapCard = {
-            navController.navigate(route = "/Details/$it")
-        })
-    Spacer(modifier = Modifier.padding(top = 10.dp))
 }
