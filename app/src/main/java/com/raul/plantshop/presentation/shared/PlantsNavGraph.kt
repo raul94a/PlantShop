@@ -20,9 +20,11 @@ import com.raul.plantshop.presentation.details.PlantDetailsScreen
 import com.raul.plantshop.presentation.home.HomeScreen
 import com.raul.plantshop.presentation.plants.PlantsViewModel
 import androidx.navigation.compose.NavHost
+import com.raul.plantshop.Screens
 import com.raul.plantshop.data.plant.PlantRepositoryImpl
 import com.raul.plantshop.data.plant.PlantsApiImpl
 import com.raul.plantshop.presentation.plantsCart.CheckoutViewModel
+import com.raul.plantshop.presentation.splash.SplashScreen
 
 @Composable
 fun PlantsNavGraph(
@@ -33,13 +35,21 @@ fun PlantsNavGraph(
     val repo = PlantRepositoryImpl(api);
     val viewModel = PlantsViewModel(repo)
 
-    NavHost(navController = navController, startDestination = "/Home") {
+    NavHost(navController = navController, startDestination = Screens.Splash.route) {
+        addSplash(navController)
         addPlantScreen(navController, viewModel, model)
         addPlantDetails(navController, viewModel)
     }
 
 }
 
+fun NavGraphBuilder.addSplash(navController: NavController) {
+    composable(route = Screens.Splash.route) {
+        SplashScreen() {
+            navController.navigate(Screens.Home.route)
+        }
+    }
+}
 
 fun NavGraphBuilder.addPlantScreen(
     navController: NavController,
